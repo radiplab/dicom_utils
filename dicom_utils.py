@@ -118,7 +118,7 @@ angio_keep_list = [
                     'TableMotion'
                 ]
 
-def anonymize(dicom_path, output_path, output_dir_elements=None, preserve_list=list(), MRN=None, Accession=None, PatientName=None, SeriesDescription=None, verbose=False):
+def anonymize(dicom_path, output_path, preserve_list=list(), MRN=None, Accession=None, PatientName=None, SeriesDescription=None, verbose=False):
     """ Anonymizes all DICOM files within the provided path, saving them to the 
     specified output_path. The original DICOM files are NOT modified. All
     contents in the output_path will be deleted.
@@ -147,26 +147,6 @@ def anonymize(dicom_path, output_path, output_dir_elements=None, preserve_list=l
         if output_dir != '':
             output_dir = output_dir + '-'
         output_dir = output_dir + 'Acc' + Accession
-    dicom_files = os.listdir(dicom_path)
-    for dicom_file in dicom_files:
-        if os.path.isfile(os.path.join(dicom_path, dicom_file)) and not dicom_file.startswith('KO') and not dicom_file.startswith('.DS_Store'):
-            ds = pydicom.filereader.dcmread(os.path.join(dicom_path, dicom_file))
-            if output_dir_elements is not None:
-                for output_dir_element in output_dir_elements:
-                    de = ds.data_element(output_dir_element)						
-                    if de is not None:
-                        value = de.value
-                        if output_dir != '':
-                            output_dir = output_dir + '-'
-                        if output_dir_element == 'SliceThickness':
-                            value = float(value)
-                            value = 'ST-' + str(np.around(value, 3))
-                        elif output_dir_element == 'ImageOrientationPatient':
-                            value = 'IOP-' + str(np.around(value[0],3)) + '_' + str(np.around(value[1],3)) + '_' + str(np.around(value[2],3))
-                        elif output_dir_element == 'NumSlices':
-                            value = 'NumSlices-' + str(len(dicom_files))
-                        output_dir = output_dir + str(value)
-            break
 
     if os.path.exists(os.path.join(output_path, output_dir)):
         shutil.rmtree(os.path.join(output_path, output_dir))
