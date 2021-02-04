@@ -1,1 +1,2 @@
-# dicom_utils
+# dicom-utils
+Python library for manipulating DICOM datasets
