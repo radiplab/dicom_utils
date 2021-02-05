@@ -232,7 +232,7 @@ def dcm2jpg(dicom_path, output_path, window_width=None, window_level=None, verbo
     """ Converts DICOM to 8 bit jpg image files.
 
     Parameters:
-        dicom_path (str): Full path to folder containing DICOM files
+        dicom_path (str): Full path to folder containing DICOM files - will not be modified
         output_path (str): Full path to write image files to
         window_width (int, optional): If not specified, the default window width in the DICOM metadata will be used.
         window_level (int, optional): If not specified, the default window level / center in the DICOM metadata will be used.
@@ -249,6 +249,8 @@ def dcm2jpg(dicom_path, output_path, window_width=None, window_level=None, verbo
         shutil.rmtree(output_path)
     os.mkdir(output_path)
     
+    shutil.copytree(dicom_path, os.path.join(output_path, 'dicom_files'))
+    dicom_path = os.path.join(output_path, 'dicom_files')
     for dicom_file in os.listdir(dicom_path):
         if not dicom_file.endswith('.dcm'):
             shutil.move(os.path.join(dicom_path, dicom_file), os.path.join(dicom_path, dicom_file + '.dcm'))
@@ -297,6 +299,8 @@ def dcm2jpg(dicom_path, output_path, window_width=None, window_level=None, verbo
         # Write the pixel data to an image
         image_filename = str(i).zfill(4) + "." + image_type
         cv2.imwrite(os.path.join(output_path, image_filename), scaled_slice_array)
+
+    shutil.rmtree(os.path.join(output_path, 'dicom_files'))
 
     if verbose:
         print('.done - time = ' + str(np.around((time.time() - start_time), decimals=1)) + 'sec')

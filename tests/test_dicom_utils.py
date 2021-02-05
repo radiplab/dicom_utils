@@ -4,7 +4,7 @@ import unittest
 
 import dicom_utils as du
 
-class TestDicomUtils(unittest.TestCase):
+class TestDicomUtils(unittest.TestCase):  
 
     def test_integration_anonymize(self):
         """
