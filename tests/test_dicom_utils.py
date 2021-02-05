@@ -6,15 +6,12 @@ import dicom_utils as du
 
 class TestDicomUtils(unittest.TestCase):  
 
-    def test_anon_data(self):
-        dicom_path = r"./tests/data/test_ct_abdomen"
-
     def test_integration_anonymize(self):
         """
         Integration test of DICOM anonymization method
         """
 
-        test_dicom_path = r"./tests/data/test_ct_abdomen"
+        test_dicom_path = r"./tests/data/tcia_ct_abdomens"
         test_output_path = r"./tests/output"
 
         if os.path.exists(test_output_path):
@@ -33,9 +30,9 @@ class TestDicomUtils(unittest.TestCase):
 
         # Verify values in 1st DICOM file
         ds = du.get_dicom_dataset(anon_dicom_path)
-        self.assertEqual(ds.PatientAge, '037Y')
-        self.assertEqual(ds.PatientBirthDate, '19791207')
-        self.assertEqual(ds.PatientSex, 'M')
+        self.assertEqual(ds.PatientAge, '055Y')
+        self.assertEqual(ds.PatientBirthDate, '')
+        self.assertEqual(ds.PatientSex, 'F')
         self.assertEqual(ds.PatientID, '0000001')
         self.assertEqual(ds.AccessionNumber, '0000001')
         self.assertEqual(ds.PatientName, 'LAST^FIRST')
@@ -61,7 +58,8 @@ class TestDicomUtils(unittest.TestCase):
         Unit test of the dcm2jpg method
         """
 
-        test_dicom_path = r"./tests/data/test_ct_abdomen"
+        #test_dicom_path = r"./tests/data/test_ct_abdomen"
+        test_dicom_path = r"./tests/data/tcia_ct_abdomens"
         test_output_path = r"./tests/output"
 
         if os.path.exists(test_output_path):
@@ -72,7 +70,7 @@ class TestDicomUtils(unittest.TestCase):
 
         # In this case, there are 3 series in the test_dicom_path.
         # Only the first series of 102 images should be loaded for conversion
-        self.assertEqual(len(os.listdir(test_output_path)), 102)
+        self.assertEqual(len(os.listdir(test_output_path)), 20)
 
         # Files should be in jpg format - visually confirm the expected window and level
         self.assertTrue(os.listdir(test_output_path)[0].endswith('.jpg'))
