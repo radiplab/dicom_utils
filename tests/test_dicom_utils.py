@@ -6,6 +6,9 @@ import dicom_utils as du
 
 class TestDicomUtils(unittest.TestCase):  
 
+    def test_anon_data(self):
+        dicom_path = r"./tests/data/test_ct_abdomen"
+
     def test_integration_anonymize(self):
         """
         Integration test of DICOM anonymization method

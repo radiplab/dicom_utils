@@ -1,3 +1,9 @@
+# Ignore Mac system files
+.DS_store
+
+# Ignore .vscode folder
+.vscode
+
 tests/output/*
 
 # Byte-compiled / optimized / DLL files
