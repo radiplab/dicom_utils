@@ -9,6 +9,8 @@ This is a Python library for manipulating DICOM datasets. It contains some of th
 
 Importantly, I'm sharing these in the sprit of collaboration, hoping they are helpful to someone. This library of course comes with no guarantees, and you assume all responsibility for ensuring they behave as intended. For example, DICOM anonymization is a thorny process, and I would highly recommend you check your metadata to ensure it is actually anonymized as expected.
 
+I'm also relatively new to GitHub. I welcome any suggestions or feedback.
+
 ## Getting DICOM
 First, you may be wondering: How do I even get the DICOM files to begin with? There are numerous different techniques - the best first step is to talk with your PACS support. This guide assumes you already have the DICOM files. For convenience, this code also comes with 3 small test CT abdomen studies downloaded from TCIA. These are located in tests/data/tcia_ct_abdomens.
 
